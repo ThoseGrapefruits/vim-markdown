@@ -1,8 +1,8 @@
 " Vim syntax file
 " Language:     Markdown
-" Maintainer:   Tim Pope <vimNOSPAM@tpope.org>
+" Maintainer:   Logan Moore
 " Filenames:    *.markdown
-" Last Change:  2013 May 30
+" Last Change:  2015 November 18
 
 if exists("b:current_syntax")
   finish
@@ -26,6 +26,13 @@ for s:type in map(copy(g:markdown_fenced_languages),'matchstr(v:val,"[^=]*$")')
   unlet! b:current_syntax
 endfor
 unlet! s:type
+
+" Tex Embedding à la Pandoc-Markdown
+if exists('g:markdown_tex') && g:markdown_tex == 1
+    syn region markdownCode matchgroup=markdownTexDelimiter start="$" end="$" keepend contains=markdownLineStart
+    syn region markdownCode matchgroup=markdownTexDelimiter start="$$" end="$$" keepend contains=markdownLineStart
+    exe 'syn region markdownHighlight'.substitute(matchstr('tex','[^=]*$'),'\..*','','').' matchgroup=markdownTexDelimiter start="^\s*$$$\s*'.matchstr('tex','[^=]*').'\>.*$" end="^\s*$$$\ze\s*$" keepend contains=@markdownHighlight'.substitute(matchstr('tex','[^=]*$'),'\.','','g')
+endif
 
 syn sync minlines=10
 syn case ignore
@@ -133,6 +140,7 @@ hi def link markdownBoldDelimiter         markdownBold
 hi def link markdownBoldItalic            htmlBoldItalic
 hi def link markdownBoldItalicDelimiter   markdownBoldItalic
 hi def link markdownCodeDelimiter         Delimiter
+hi def link markdownTexDelimiter          Delimiter
 
 hi def link markdownEscape                Special
 hi def link markdownError                 Error
