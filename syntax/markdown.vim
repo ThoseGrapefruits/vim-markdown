@@ -31,7 +31,7 @@ unlet! s:type
 if exists('g:markdown_tex') && g:markdown_tex == 1
     syn region markdownCode matchgroup=markdownTexDelimiter start="$" end="$" keepend contains=markdownLineStart
     syn region markdownCode matchgroup=markdownTexDelimiter start="$$" end="$$" keepend contains=markdownLineStart
-    exe 'syn region markdownHighlight'.substitute(matchstr('tex','[^=]*$'),'\..*','','').' matchgroup=markdownTexDelimiter start="^\s*$$$\s*'.matchstr('tex','[^=]*').'\>.*$" end="^\s*$$$\ze\s*$" keepend contains=@markdownHighlight'.substitute(matchstr('tex','[^=]*$'),'\.','','g')
+    exe 'syn region markdownHighlight'.substitute(matchstr('tex','[^=]*$'),'\..*','','').' matchgroup=markdownTexDelimiter start="^\s*\$\$\$\s*'.matchstr('tex','[^=]*').'\>.*$" end="^\s*\$\$\$\ze\s*$" keepend contains=@markdownHighlight'.substitute(matchstr('tex','[^=]*$'),'\.','','g')
 endif
 
 syn sync minlines=10
